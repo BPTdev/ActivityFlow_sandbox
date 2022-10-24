@@ -1,0 +1,19 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.connectPoint {
+  opacity: 0.2;
+  background-image: url(./images/link.png);
+}
+
+.connectPoint:hover {
+  opacity: 0.6;
+}
+
+.hover:hover {
+}
+.hover {
+  display: block;
+}
