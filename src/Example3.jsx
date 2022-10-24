@@ -3,13 +3,13 @@ import Xarrow from "react-xarrows";
 import Draggable from "react-draggable";
 import "./styles.css";
 
-const arrowsPath = "grid";
+const arrowsPath = "smooth";
 //Style for the connector
 const connectPointStyle = {
   position: "absolute",
   width: 15,
   height: 15,
-  background: "black"
+  background: "black",
 };
 //cards data
 export const cardsData = [
@@ -22,7 +22,7 @@ export const cardsData = [
   { id: 7, title: "Carte 5", completionLevel: 10 },
   { id: 8, color: "#50BFD5", title: "Carte 6.1", completionLevel: 25 },
   { id: 9, color: "#FFE527", title: "Carte 6.2", completionLevel: 0 },
-  { id: 10, color: "#e51c23", title: "Carte de fin", completionLevel: 0 }
+  { id: 10, color: "#e51c23", title: "Carte de fin", completionLevel: 0 },
 ];
 //Position of the connector
 const connectPointOffset = {
@@ -30,7 +30,7 @@ const connectPointOffset = {
   right: { left: "100%", top: "50%", transform: "translate(-50%, -50%)" },
   top: { left: "50%", top: 0, transform: "translate(-50%, -50%)" },
   bottom: { left: "50%", top: "100%", transform: "translate(-50%, -50%)" },
-  topRight: { right: 0, top: 0 }
+  topRight: { right: 0, top: 0 },
 };
 
 const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
@@ -45,7 +45,7 @@ const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
         style={{
           ...connectPointStyle,
           ...connectPointOffset[handler],
-          ...position
+          ...position,
         }}
         draggable
         onMouseDown={(e) => e.stopPropagation()}
@@ -61,7 +61,7 @@ const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
             left: e.clientX - x - offsetLeft,
             top: e.clientY - y - offsetTop,
             transform: "none",
-            opacity: 0
+            opacity: 0,
           });
         }}
         ref={ref1}
@@ -80,7 +80,7 @@ const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
 const boxStyle = {
   border: "1px solid black",
   position: "relative",
-  padding: "20px 10px"
+  padding: "20px 10px",
 };
 
 const Box = ({ text, handler, addArrow, setArrows, boxId }) => {
