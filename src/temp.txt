@@ -1,0 +1,27 @@
+const removeConnection = (item, arrows) => {
+  const newarray = arrows;
+  const filteredElements = newarray.filter(
+    (items) =>
+      items.parentStart === item.parentStart &&
+      items.parentEnd === item.parentEnd
+  );
+  if (filteredElements.length < 2) {
+    const parentIndex = parentConnection.findIndex(
+      (ele) => ele.start === item.parentStart && ele.end === item.parentEnd
+    );
+    parentConnection.splice(parentIndex, 1);
+    setParentConnection([...parentConnection]);
+  }
+  const index = newarray.findIndex((items) => items === item);
+  newarray.splice(index, 1);
+  setConnection([...newarray]);
+};
+
+
+
+<img
+              alt="Delete link"
+              className="hover"
+              src="./images/trash-bin.png"
+              width="40 px"
+            ></img>

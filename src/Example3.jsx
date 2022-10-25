@@ -4,7 +4,6 @@ import Draggable from "react-draggable";
 import "./styles.css";
 
 const arrowsPath = "smooth";
-const [errorMessage, setErrorMessage] = useState();
 
 //Style for the connector
 const connectPointStyle = {
@@ -35,9 +34,7 @@ const connectPointOffset = {
   topRight: { right: 0, top: 0 },
 };
 
-const errorHandler = (message) => {
-  
-}
+//TODO: Change that function
 
 const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
   const ref1 = useRef();
@@ -108,6 +105,7 @@ const Box = ({ text, handler, addArrow, setArrows, boxId }) => {
         onDrop={(e) => {
           if (e.dataTransfer.getData("arrow") === boxId) {
             console.log(e.dataTransfer.getData("arrow"), boxId);
+            boxId = 0;
           } else {
             const refs = { start: e.dataTransfer.getData("arrow"), end: boxId };
             addArrow(refs);
@@ -121,25 +119,7 @@ const Box = ({ text, handler, addArrow, setArrows, boxId }) => {
     </Draggable>
   );
 };
-/*
-const removeConnection = (item, arrows) => {
-  const newarray = arrows;
-  const filteredElements = newarray.filter(
-    (items) =>
-      items.parentStart === item.parentStart &&
-      items.parentEnd === item.parentEnd
-  );
-  if (filteredElements.length < 2) {
-    const parentIndex = parentConnection.findIndex(
-      (ele) => ele.start === item.parentStart && ele.end === item.parentEnd
-    );
-    parentConnection.splice(parentIndex, 1);
-    setParentConnection([...parentConnection]);
-  }
-  const index = newarray.findIndex((items) => items === item);
-  newarray.splice(index, 1);
-  setConnection([...newarray]);
-};*/
+
 
 export default function App() {
   const [arrows, setArrows] = useState([]);
@@ -152,8 +132,9 @@ export default function App() {
       (items) => items.start === start && items.end === end
     );
 
-    /*console.log(deleteArrow);*/
+    console.log(deleteArrow);
   };
+
   return (
     <div style={{ display: "flex", justifyContent: "space-evenly" }}>
       {/* map the data */}
@@ -164,12 +145,7 @@ export default function App() {
           boxId={"" + id.id}
         />
       ))}
-      {/*<img
-              alt="Delete link"
-              className="hover"
-              src="./images/trash-bin.png"
-              width="40 px"
-            ></img>*/}
+      
       {arrows.map((ar) => (
         <Xarrow
           className="arrow"
@@ -180,7 +156,7 @@ export default function App() {
           labels={""}
         />
       ))}
-      <button onclick={removeArrow(2, 1)}>sdfsdf</button>
+      {<button onclick={removeArrow(2, 1)}>sdfsdf</button>}
     </div>
   );
 }
