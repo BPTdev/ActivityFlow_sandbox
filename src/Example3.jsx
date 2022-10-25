@@ -4,6 +4,8 @@ import Draggable from "react-draggable";
 import "./styles.css";
 
 const arrowsPath = "smooth";
+const [errorMessage, setErrorMessage] = useState();
+
 //Style for the connector
 const connectPointStyle = {
   position: "absolute",
@@ -13,8 +15,8 @@ const connectPointStyle = {
 };
 //cards data
 export const cardsData = [
-  { id: 1, color: "#4caf50", title: "Carte 1", completionLevel: 100 },
   { id: 2, title: "Carte 2", completionLevel: 100 },
+  { id: 1, color: "#4caf50", title: "Carte 1", completionLevel: 100 },
   { id: 3, title: "Carte 3.1", completionLevel: 90 },
   { id: 4, color: "#ff9800", title: "Carte 3.2", completionLevel: 80 },
   { id: 5, color: "#e51c23", title: "Carte 3.3", completionLevel: 70 },
@@ -32,6 +34,10 @@ const connectPointOffset = {
   bottom: { left: "50%", top: "100%", transform: "translate(-50%, -50%)" },
   topRight: { right: 0, top: 0 },
 };
+
+const errorHandler = (message) => {
+  
+}
 
 const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
   const ref1 = useRef();
@@ -115,14 +121,38 @@ const Box = ({ text, handler, addArrow, setArrows, boxId }) => {
     </Draggable>
   );
 };
-const showArray = (arrows) => {
-  arrows.map((ar) => console.log(ar));
-};
+/*
+const removeConnection = (item, arrows) => {
+  const newarray = arrows;
+  const filteredElements = newarray.filter(
+    (items) =>
+      items.parentStart === item.parentStart &&
+      items.parentEnd === item.parentEnd
+  );
+  if (filteredElements.length < 2) {
+    const parentIndex = parentConnection.findIndex(
+      (ele) => ele.start === item.parentStart && ele.end === item.parentEnd
+    );
+    parentConnection.splice(parentIndex, 1);
+    setParentConnection([...parentConnection]);
+  }
+  const index = newarray.findIndex((items) => items === item);
+  newarray.splice(index, 1);
+  setConnection([...newarray]);
+};*/
 
 export default function App() {
   const [arrows, setArrows] = useState([]);
   const addArrow = ({ start, end }) => {
     setArrows([...arrows, { start, end }]);
+  };
+  const removeArrow = ({ start, end }) => {
+    const deleteArrowArray = arrows;
+    const deleteArrow = deleteArrowArray.filter(
+      (items) => items.start === start && items.end === end
+    );
+
+    /*console.log(deleteArrow);*/
   };
   return (
     <div style={{ display: "flex", justifyContent: "space-evenly" }}>
@@ -134,24 +164,23 @@ export default function App() {
           boxId={"" + id.id}
         />
       ))}
-
+      {/*<img
+              alt="Delete link"
+              className="hover"
+              src="./images/trash-bin.png"
+              width="40 px"
+            ></img>*/}
       {arrows.map((ar) => (
         <Xarrow
           className="arrow"
           path={arrowsPath}
           start={ar.start}
           end={ar.end}
-          key={ar.start + "-." + ar.end}
-          labels={
-            <img
-              alt="Delete link"
-              className="hover"
-              src="./images/trash-bin.png"
-              width="40 px"
-            ></img>
-          }
+          key={ar.start + "." + ar.end}
+          labels={""}
         />
       ))}
+      <button onclick={removeArrow(2, 1)}>sdfsdf</button>
     </div>
   );
 }
