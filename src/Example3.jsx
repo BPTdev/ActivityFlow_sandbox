@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, Component } from "react";
 import Xarrow from "react-xarrows";
 import Draggable from "react-draggable";
 import "./styles.css";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const arrowsPath = "smooth";
 
