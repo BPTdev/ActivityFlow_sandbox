@@ -3,18 +3,19 @@ import Xarrow from "react-xarrows";
 import Draggable from "react-draggable";
 import "./styles.css";
 
-const arrowsPath = "grid";
+const arrowsPath = "smooth";
+
 //Style for the connector
 const connectPointStyle = {
   position: "absolute",
   width: 15,
   height: 15,
-  background: "black"
+  background: "black",
 };
 //cards data
 export const cardsData = [
-  { id: 1, color: "#4caf50", title: "Carte 1", completionLevel: 100 },
   { id: 2, title: "Carte 2", completionLevel: 100 },
+  { id: 1, color: "#4caf50", title: "Carte 1", completionLevel: 100 },
   { id: 3, title: "Carte 3.1", completionLevel: 90 },
   { id: 4, color: "#ff9800", title: "Carte 3.2", completionLevel: 80 },
   { id: 5, color: "#e51c23", title: "Carte 3.3", completionLevel: 70 },
@@ -22,7 +23,7 @@ export const cardsData = [
   { id: 7, title: "Carte 5", completionLevel: 10 },
   { id: 8, color: "#50BFD5", title: "Carte 6.1", completionLevel: 25 },
   { id: 9, color: "#FFE527", title: "Carte 6.2", completionLevel: 0 },
-  { id: 10, color: "#e51c23", title: "Carte de fin", completionLevel: 0 }
+  { id: 10, color: "#e51c23", title: "Carte de fin", completionLevel: 0 },
 ];
 //Position of the connector
 const connectPointOffset = {
@@ -30,8 +31,10 @@ const connectPointOffset = {
   right: { left: "100%", top: "50%", transform: "translate(-50%, -50%)" },
   top: { left: "50%", top: 0, transform: "translate(-50%, -50%)" },
   bottom: { left: "50%", top: "100%", transform: "translate(-50%, -50%)" },
-  topRight: { right: 0, top: 0 }
+  topRight: { right: 0, top: 0 },
 };
+
+//TODO: Change that function
 
 const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
   const ref1 = useRef();
@@ -45,7 +48,7 @@ const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
         style={{
           ...connectPointStyle,
           ...connectPointOffset[handler],
-          ...position
+          ...position,
         }}
         draggable
         onMouseDown={(e) => e.stopPropagation()}
@@ -61,7 +64,7 @@ const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
             left: e.clientX - x - offsetLeft,
             top: e.clientY - y - offsetTop,
             transform: "none",
-            opacity: 0
+            opacity: 0,
           });
         }}
         ref={ref1}
@@ -80,7 +83,7 @@ const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
 const boxStyle = {
   border: "1px solid black",
   position: "relative",
-  padding: "20px 10px"
+  padding: "20px 10px",
 };
 
 const Box = ({ text, handler, addArrow, setArrows, boxId }) => {
@@ -102,6 +105,7 @@ const Box = ({ text, handler, addArrow, setArrows, boxId }) => {
         onDrop={(e) => {
           if (e.dataTransfer.getData("arrow") === boxId) {
             console.log(e.dataTransfer.getData("arrow"), boxId);
+            boxId = 0;
           } else {
             const refs = { start: e.dataTransfer.getData("arrow"), end: boxId };
             addArrow(refs);
@@ -115,15 +119,22 @@ const Box = ({ text, handler, addArrow, setArrows, boxId }) => {
     </Draggable>
   );
 };
-const showArray = (arrows) => {
-  arrows.map((ar) => console.log(ar));
-};
+
 
 export default function App() {
   const [arrows, setArrows] = useState([]);
   const addArrow = ({ start, end }) => {
     setArrows([...arrows, { start, end }]);
   };
+  const removeArrow = ({ start, end }) => {
+    const deleteArrowArray = arrows;
+    const deleteArrow = deleteArrowArray.filter(
+      (items) => items.start === start && items.end === end
+    );
+
+    console.log(deleteArrow);
+  };
+
   return (
     <div style={{ display: "flex", justifyContent: "space-evenly" }}>
       {/* map the data */}
@@ -134,24 +145,18 @@ export default function App() {
           boxId={"" + id.id}
         />
       ))}
-
+      
       {arrows.map((ar) => (
         <Xarrow
           className="arrow"
           path={arrowsPath}
           start={ar.start}
           end={ar.end}
-          key={ar.start + "-." + ar.end}
-          labels={
-            <img
-              alt="Delete link"
-              className="hover"
-              src="./images/trash-bin.png"
-              width="40 px"
-            ></img>
-          }
+          key={ar.start + "." + ar.end}
+          labels={""}
         />
       ))}
+      {<button onclick={removeArrow(2, 1)}>sdfsdf</button>}
     </div>
   );
 }
