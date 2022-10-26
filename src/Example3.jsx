@@ -1,8 +1,7 @@
-import React, { useRef, useState, Component } from "react";
+import React, { useRef, useState } from "react";
 import Xarrow from "react-xarrows";
 import Draggable from "react-draggable";
 import "./styles.css";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const arrowsPath = "smooth";
 
@@ -83,8 +82,9 @@ const ConnectPointsWrapper = ({ boxId, handler, dragRef, boxRef }) => {
 
 const boxStyle = {
   border: "1px solid black",
-  position: "relative",
+  position: "flex",
   padding: "20px 10px",
+  height: "100px",
 };
 
 const Box = ({ text, handler, addArrow, setArrows, boxId }) => {
@@ -106,7 +106,7 @@ const Box = ({ text, handler, addArrow, setArrows, boxId }) => {
         onDrop={(e) => {
           if (e.dataTransfer.getData("arrow") === boxId) {
             console.log(e.dataTransfer.getData("arrow"), boxId);
-            boxId = 0;
+            e = 0;
           } else {
             const refs = { start: e.dataTransfer.getData("arrow"), end: boxId };
             addArrow(refs);
@@ -120,7 +120,6 @@ const Box = ({ text, handler, addArrow, setArrows, boxId }) => {
     </Draggable>
   );
 };
-
 
 export default function App() {
   const [arrows, setArrows] = useState([]);
@@ -137,7 +136,14 @@ export default function App() {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+    <div
+      className="zoom"
+      style={{
+        display: "flex",
+        justifyContent: "space-evenly",
+        height: 700,
+      }}
+    >
       {/* map the data */}
       {cardsData.map((id) => (
         <Box
@@ -146,7 +152,7 @@ export default function App() {
           boxId={"" + id.id}
         />
       ))}
-      
+
       {arrows.map((ar) => (
         <Xarrow
           className="arrow"
@@ -157,7 +163,7 @@ export default function App() {
           labels={""}
         />
       ))}
-      {<button onclick={removeArrow(2, 1)}>sdfsdf</button>}
+      {/*<button onclick={removeArrow(2, 1)}>sdfsdf</button>*/}
     </div>
   );
 }
